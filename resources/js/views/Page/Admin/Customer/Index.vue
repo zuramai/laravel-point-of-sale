@@ -69,8 +69,6 @@
                                             <div class="badge badge-primary">{{ data.role }}</div>
                                         </td>
                                         <td>
-                                            <button type="button" class='btn btn-primary' @click="userDetail(data.id)">Detail</button>
-                                            <button type="button" class='btn btn-warning' @click="userEdit(data.id)">Edit</button>
                                             <button type="button" @click="userDelete(data.id)" class="btn btn-danger">Hapus</button>
                                         </td>
                                     </tr>
@@ -94,7 +92,7 @@
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">Tambah Pengguna</h5>
+                        <h5 class="modal-title" id="exampleModalLabel">Tambah Customer</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Tutup">
                         <span aria-hidden="true">&times;</span>
                         </button>
@@ -107,7 +105,7 @@
                                 </ul>
                             </div>
                                 <div class="form-group">
-                                    <label for="">Nama Pengguna: </label>
+                                    <label for="">Nama Customer: </label>
                                     <input type="text" name="name" class="form-control" v-model="add.name">
                                 </div>
                                 <div class="form-group">
@@ -176,6 +174,15 @@
                                     <textarea name="alamat" id="" cols="30" rows="10" v-model="add.alamat" class="form-control"></textarea>
                                 </div>
                                 <div class="form-group">
+                                    <label for="">Role: </label>
+                                    <select name="role" id="" class="form-control" v-model='add.role'>
+                                        <option value="Walk-in">Walk-in Customer</option>
+                                        <option value="Eceran">Eceran Customer</option>
+                                        <option value="Retail">Retail Customer</option>
+                                        <option value="Dropshipper">Dropshipper Customer</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
                                     <label for="">Foto: </label>
                                     <input type="file" name="file" id="" class='form-control-file' accept='image/*' @change="onChangePhotoAdd">
                                     <img :src="`/images/categories/${add.image_name}`" alt="" class="image-table" id='add-category-image' v-if="add.image_name">
@@ -189,62 +196,7 @@
                 </div>
             </div>
         </div>
-        <!-- Edit Modal -->
-        <div class="modal fade" id="modalEdit" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">Edit Pengguna</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Tutup">
-                        <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <form action="" method='POST' enctype="multipart/form-data" @submit.prevent="userUpdate(edit.id)">
-                        
-                        <div class="modal-body">
-                                <div class="alert alert-danger" v-if="errors != ''" >
-                                    <ul>
-                                        <li v-for="error in errors" v-bind:key="error.id">{{ error[0] }}</li>
-                                    </ul>
-                                </div>
-                                <div class="form-group">
-                                    <label for="">Nama Pengguna: </label>
-                                    <input type="text" name="name" class="form-control" v-model="edit.name">
-                                </div>
-                                <div class="form-group">
-                                    <label for="">Email: </label>
-                                    <input type="text" name="name" class="form-control" v-model="edit.email">
-                                </div>
-                                <div class="form-group">
-                                    <label for="">Nomor Telepon: </label>
-                                    <input type='text' name="description" class="form-control" v-model="edit.phone">
-                                </div>
-                                <div class="form-group">
-                                    <label for="">Alamat: </label>
-                                    <textarea name="description" class="form-control" v-model="edit.address"></textarea>
-                                </div>
-                                <div class="form-group">
-                                    <label for="">Level: </label>
-                                    <select name="level" id="" v-model="edit.level" class="form-control">
-                                        <option value="">Pilih salah satu..</option>
-                                        <option value="Admin"  >Admin</option>
-                                        <option value="Kasir" >Kasir</option>
-                                    </select>
-                                </div>
-                                <div class="form-group">
-                                    <label for="">Foto: </label>
-                                    <input type="file" name="file" id="" class='form-control-file' accept='image/*' @change="onChangePhotoEdit">
-                                    <img :src="`/images/customers/${edit.image_name}`" alt="" class="image-table" id='edit-category-image'>
-                                </div>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                            <button type="submit" class="btn btn-primary">Save changes</button>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
+  
         <!-- Detail Modal -->
         <div class="modal fade" id="modalDetail" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog" role="document">
@@ -328,10 +280,10 @@ export default {
                 name: '',
                 email: '',
                 phone: '',
-                role: '',
                 alamat: '',
                 kota: '',
                 provinsi: '',
+                role: '',
                 photo: '',
                 image_name: '',
             },

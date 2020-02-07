@@ -103,14 +103,9 @@ const router = new VueRouter({
         { path: '/login', component: AuthLogin, meta: { auth: false, pageType: 'auth' } },
     ]
 })
-router.beforeEach((to, from, next) => {
-    $vs.loading();
-})
-router.beforeEach((to, from, next) => {
-    $vs.loading.close()
-})
 
 
+Vue.router = router
 Vue.use(VueAuth, auth)
 
 const app = new Vue({

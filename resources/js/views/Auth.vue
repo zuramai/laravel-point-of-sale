@@ -1,5 +1,5 @@
 <template>
-    <div class="container">
+    <div class="container mt-20">
         <div class="row align-items-center">
             <div class="col-lg-6 offset-lg-3 col-12">
                 <div class="card mb-0">
@@ -7,7 +7,7 @@
                         <div class="p-2">
                             <h4 class="text-muted float-right font-18 mt-4">Sign In</h4>
                             <div>
-                                <a href="index.html" class="logo logo-admin"><img src="/images/logo_dark.png" height="28" alt="logo"></a>
+                                <a href="index.html" class="logo logo-admin"><img src="/images/logo_dark2.png" height="28" alt="logo"></a>
                             </div>
                         </div>
 
@@ -121,5 +121,8 @@ export default {
 }
 .fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
   opacity: 0;
+}
+.mt-20 {
+    margin-top: 4rem;
 }
 </style>

@@ -101,9 +101,14 @@
                         <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
+                    <div class="alert alert-danger" v-if='errorAdd'>
+                        <ul>
+                            <li v-for="error in errorsAdd" :key="error[0]">{{ error[0] }}</li>
+                        </ul>
+                    </div>
                     <form action="" method='POST' enctype="multipart/form-data" @submit.prevent="addCategory">
                         
-                        <div class="modal-body">
+                            <div class="modal-body">
                                 <div class="form-group">
                                     <label for="">Nama Kategori: </label>
                                     <input type="text" name="name" class="form-control" v-model="name">
@@ -119,7 +124,7 @@
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                            <button type="submit" class="btn btn-primary" :disabled="addLoading = true"><span class="spinner-border spinner-border-sm" role="status" aria-hidden="true" v-if="addLoading == true"></span> Tambah</button>
+                            <button type="submit" class="btn btn-primary" :disabled="addLoading == true"><span class="spinner-border spinner-border-sm" role="status" aria-hidden="true" v-if="addLoading == true"></span> Tambah</button>
                         </div>
                     </form>
                 </div>
@@ -183,6 +188,8 @@ export default {
                 image_name: '',
                 photo: '',
             },
+            errorAdd: false,
+            errorsAdd: [],
             search: '',
             name: '',
             description: '',
@@ -216,7 +223,6 @@ export default {
         },
 
         addCategory() {
-            this.addLoading = true;
             let name = this.name;
             let description = this.description;
             let photo = this.photo
@@ -236,7 +242,16 @@ export default {
                         'Sukses tambah kategori',
                         'success'
                     );
+                    this.errorsAdd = [];
+                    this.errorAdd = false;
+                    $('#modalAdd').modal('hide')
                     this.displayData();
+                }).catch(err => {
+                    if(err.response.status == 422) {
+                        this.errorAdd = true;
+                        this.errorsAdd = err.response.data.errors;
+                        console.log(err.response.data.errors);
+                    }
                 });
         },
 
@@ -281,11 +296,9 @@ export default {
             $(event.target).attr('disabled',true);
             let _this = this;
             axios.delete(`/api/v1/category/${id}`)
-                .then(function() {
-                    $(event.target).find('span').addClass('d-none');
-                    $(event.target).removeAttr('disabled');
+                .then(() => {
                     Swal.fire('Sukses hapus kategori!','Sukses!','success');
-                    _this.displayData();
+                    this.displayData();
                 });
         },
 
